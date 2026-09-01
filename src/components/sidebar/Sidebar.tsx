@@ -16,6 +16,9 @@ import {
   LogOut,
   MessageSquare,
   User,
+  Award,
+  Workflow,
+  HelpCircle,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -52,6 +55,16 @@ const navigation = [
     icon: ClipboardList,
   },
   {
+    name: "Certifications Section",
+    href: "/certification",
+    icon: Award,
+  },
+  {
+    name: "Work Process Section",
+    href: "/process",
+    icon: Workflow,
+  },
+  {
     name: "Recruiter Feedback",
     href: "/recruiter-feedback",
     icon: Crown,
@@ -60,6 +73,11 @@ const navigation = [
     name: "Knowledge & Blogs",
     href: "/knowledge",
     icon: Hash,
+  },
+  {
+    name: "FAQ Section",
+    href: "/faq",
+    icon: HelpCircle,
   },
   {
     name: "Contact Section",
@@ -76,8 +94,8 @@ export function Sidebar() {
     <div className="flex h-screen sticky bottom-0 top-0 w-[350px] flex-col bg-[#212121] z-50">
       {/* Logo */}
       <div className="h-[80px] flex items-center justify-start ml-3">
-        <div className="text-5xl gap-1 font-bold text-blue-600 uppercase tracking-wider w-full flex items-center justify-center">
-          <h1 className="text-center">Tanvir</h1>
+        <div className="text-4xl gap-1 font-black text-[#c7d300] uppercase tracking-wider w-full flex items-center justify-center">
+          <h1 className="text-center font-black">S@BIT</h1>
         </div>
       </div>
 

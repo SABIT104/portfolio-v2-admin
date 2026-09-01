@@ -48,9 +48,9 @@ export default function Header() {
           onClick={toggleDropdown}
         >
           <span>{email}</span>
-          <Avatar className="h-8 w-8">
-            <AvatarImage src="/placeholder.svg?height=32&width=32" />
-            <AvatarFallback className="text-black">TA</AvatarFallback>
+          <Avatar className="h-9 w-9 border border-[#c7d300]/50 shadow-md">
+            <AvatarImage src={user?.image || "/images/saimun-sabit.jpg"} alt="Saimun Sabed" className="object-cover" />
+            <AvatarFallback className="text-black bg-[#c7d300] font-bold">SA</AvatarFallback>
           </Avatar>
         </div>
       </div>

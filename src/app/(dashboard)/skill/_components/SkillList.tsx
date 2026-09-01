@@ -88,7 +88,7 @@ export default function SkillList() {
                 <TableRow key={skill._id} className="border-zinc-800/40 hover:bg-[#c7d300]/5 transition-all group">
                   <TableCell className="py-6 pl-8">
                     <div className="w-10 h-10 relative bg-zinc-900 rounded-lg border border-zinc-800 overflow-hidden">
-                      <Image src={skill.image} alt={skill.name} fill className="object-contain p-1" />
+                      <Image src={skill.image} alt={skill.name} fill unoptimized className="object-contain p-1" />
                     </div>
                   </TableCell>
                   <TableCell className="py-6">

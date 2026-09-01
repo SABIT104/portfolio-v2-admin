@@ -25,6 +25,8 @@ export default function EditSkill() {
   const queryClient = useQueryClient();
 
   // স্টেট ম্যানেজমেন্ট
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
   const [skillColor, setSkillColor] = useState("#c7d300");
   const [proficiency, setProficiency] = useState(80);
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -45,8 +47,10 @@ export default function EditSkill() {
   // ডাটা আসার পর স্টেট আপডেট করা
   useEffect(() => {
     if (skillData) {
-      setSkillColor(skillData.color);
-      setProficiency(skillData.proficiency);
+      setName(skillData.name || "");
+      setDescription(skillData.description || "");
+      setSkillColor(skillData.color || "#c7d300");
+      setProficiency(skillData.proficiency ?? 80);
     }
   }, [skillData]);
 
@@ -56,12 +60,15 @@ export default function EditSkill() {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/skill/updateSkill/${id}`,
         {
-          method: "PUT", // বা PUT আপনার API অনুযায়ী
+          method: "PUT",
           body: formData,
         },
       );
-      if (!res.ok) throw new Error("Failed to update skill");
-      return res.json();
+      const result = await res.json();
+      if (!res.ok || !result.success) {
+        throw new Error(result.message || "Failed to update skill");
+      }
+      return result;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["skills"] });
@@ -74,9 +81,11 @@ export default function EditSkill() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    formData.set("color", skillColor);
-    formData.set("proficiency", proficiency.toString());
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("description", description);
+    formData.append("color", skillColor);
+    formData.append("proficiency", proficiency.toString());
 
     // যদি নতুন ইমেজ সিলেক্ট করা হয় তবেই অ্যাড হবে, না হলে আগেরটাই থাকবে
     if (imageFile) {
@@ -205,7 +214,8 @@ export default function EditSkill() {
                 <input
                   type="text"
                   name="name"
-                  defaultValue={skillData?.name}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                   required
                   placeholder="e.g. Next.js"
                   className="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-3.5 text-sm text-white focus:border-[#c7d300] outline-none transition-all"
@@ -236,7 +246,8 @@ export default function EditSkill() {
               </label>
               <textarea
                 name="description"
-                defaultValue={skillData?.description}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
                 required
                 rows={4}
                 placeholder="e.g. Next.js — The React Framework for the Web."
